@@ -61,6 +61,12 @@ call_user_func(function () {
         // where requiring the main autoload.php is not enough to load extension classes
         require __DIR__ . '/../Classes/Core/ConsoleBootstrap.php';
     }
+
+    \Bartacus\Bundle\BartacusBundle\Bootstrap\SymfonyBootstrap::initKernel();
     $bootstrap = \Helhum\Typo3Console\Core\ConsoleBootstrap::create(getenv('TYPO3_CONTEXT') ?: 'Production');
-    $bootstrap->run($classLoader);
+    $bootstrap->initialize($classLoader);
+
+    \Bartacus\Bundle\BartacusBundle\Bootstrap\SymfonyBootstrap::initAppPackage();
+    $bootstrap->registerRequestHandler(new \Helhum\Typo3Console\Mvc\Cli\RequestHandler($bootstrap));
+    $bootstrap->resolveCliRequestHandler()->handleRequest();
 });
