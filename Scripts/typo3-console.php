@@ -15,6 +15,8 @@ declare(strict_types=1);
         exit(1);
     }
 
+    \Bartacus\Bundle\BartacusBundle\Bootstrap\SymfonyBootstrap::initKernel();
+
     $kernel = new \Helhum\Typo3Console\Core\Kernel($classLoader);
     $exitCode = $kernel->handle(new \Helhum\Typo3Console\Mvc\Cli\Symfony\Input\ArgvInput());
     $kernel->terminate($exitCode);
